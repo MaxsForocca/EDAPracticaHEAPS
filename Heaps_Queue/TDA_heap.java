@@ -12,7 +12,9 @@ public class TDA_heap<T extends Comparable<T>>{
     public boolean isEmpty(){
         return this.root == null;
     }
+    // Metodo insertar
     public void insertar(T dato){
+        // indice del nuevo que sera agregado
         int indice = lista.size();
         Node<T> nuevo = new Node<T>(dato);
         lista.add(new Node<T>(dato));
@@ -21,7 +23,7 @@ public class TDA_heap<T extends Comparable<T>>{
         }else{
             // trabaja con el indice del padre
             int indicePadre = indice/2;
-            // agregamos el nuevo nodo
+            // agregamos el nuevo nodo, siempre de izquierda a derecha 
             if(lista.get(indicePadre).getIzquierda() == null)
                 lista.get(indicePadre).setIzquierda(nuevo);
             else
@@ -43,9 +45,30 @@ public class TDA_heap<T extends Comparable<T>>{
         nod.setData(aux);
     }
     public void eliminar(int indice){
-        // casos de eliminacion
+        // elementos del ultimo 
+        Node<T> eliminado = lista.get(indice);
+        if(eliminado.getIzquierda()==null){
+            Node<T> padreElimin = lista.get(indice/2);
+            if(padreElimin.getIzquierda() == eliminado){
+                padreElimin.setIzquierda(padreElimin.getDerecha());
+                padreElimin.setDerecha(null);
+            }else{
+                padreElimin.setDerecha(null);
+            }
+            lista.remove(indice);
+        }else{
+            int indiceUltimo = this.lista.size()-1;
+            int indicePadreUltimo = indiceUltimo/2;
+            // Cambiamos los valores del que sera eliminado
+            lista.get(indice).setData(lista.get(indiceUltimo).getData());
+            // elimina el ultimo (elemento a eliminar)
+            this.lista.get(indicePadreUltimo);
+            this.lista.remove(indiceUltimo);
+        }
     }
-    
+    public T maxElemento(){
+        return this.root.getData();
+    }
     @Override 
     public String toString(){
         String toStr = "";
